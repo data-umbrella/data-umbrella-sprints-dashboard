@@ -18,6 +18,7 @@ cd dashboard-workshop-dash/
 ### Set up virtual environment using `conda`
 [requirements.txt](https://github.com/Vancouver-Datajam/dashboard-workshop-dash/blob/main/requirements.txt)
 
+#### This didn't work
 ```bash
 # create virtual environment with name "plotlyenv"
 conda create -n plotlyenv python=3.9
@@ -34,4 +35,12 @@ pip install -r requirements.txt
 ```
 cd notebooks
 jupyter notebook
+```
+
+---
+
+```bash
+(plotlydash) 
+my_repos/data-umbrella-projects/data-umbrella-sprints-dashboard  main ✗                               22m ⚑  
+▶ 
 ```
