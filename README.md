@@ -3,6 +3,9 @@ Data Umbrella Open Source Sprints Dashboard
 
 Prep work:  https://github.com/Vancouver-Datajam/dashboard-workshop-dash#setup-prep
 
+## Starting
+The layouts for the dashboard were cloned from:  
+https://github.com/Vancouver-Datajam/dashboard-workshop-dash
 
 ## Conda virtual environment instructions
 
