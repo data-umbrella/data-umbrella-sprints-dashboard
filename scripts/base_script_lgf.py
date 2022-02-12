@@ -16,16 +16,6 @@ def graph_region(region_df, graph_type: str, dimension1: str, dimension2: str) -
     """
     
     plot_dict = {'box': px.box,'violin': px.violin, 'scatter': px.scatter, 'line':px.line}
-    # Dictionary of plots
-    plot_dict = {'box': px.box, 
-                 'violin': px.violin,
-                 'scatter': px.scatter,
-                 'line': px.line,
-                 'pie': px.pie,
-             'bar': px.bar,
-             'scatter_geo': px.scatter_geo,
-             'funnel': px.funnel,
-            }
         
     try:
         # Initialize function
