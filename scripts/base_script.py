@@ -6,7 +6,7 @@ def graph_region(region_df, graph_type: str, dimension1: str, dimension2: str) -
     Parameters
     ----------
         region_df: (dataframe object) reshaped data frame object with mortage, delinquency and population data
-        graph_type: (string) "box", "violin", "scatter", "line"
+        graph_type: (string) "box", "violin", "scatter", "line", "pie", "bar", "funnel", "scatter_geo"
         dimension1: (str) one of 'Time' or 'Geography'
         dimension2: (str) one of 'AverageMortgageAmount', 'AverageMortgageAmount' or 'PopulationSize'
         
@@ -15,17 +15,16 @@ def graph_region(region_df, graph_type: str, dimension1: str, dimension2: str) -
         None
     """
     
-    plot_dict = {'box': px.box,'violin': px.violin, 'scatter': px.scatter, 'line':px.line}
     # Dictionary of plots
     plot_dict = {'box': px.box, 
                  'violin': px.violin,
                  'scatter': px.scatter,
                  'line': px.line,
                  'pie': px.pie,
-             'bar': px.bar,
-             'scatter_geo': px.scatter_geo,
-             'funnel': px.funnel,
-            }
+                 'bar': px.bar,
+                 'funnel': px.funnel,
+                 'scatter_geo': px.scatter_geo,
+                 }
         
     try:
         # Initialize function
