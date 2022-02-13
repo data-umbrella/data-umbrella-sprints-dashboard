@@ -79,10 +79,14 @@ if __name__ == '__main__':
     df_use = group_data(data_afme2, ['country'])
     graph_region(df_use, 'bar', "count_rows", "country",  "status_c")
     
-#     # Plot:
-     df_use = group_data(data_afme2, ['gender'])
-     graph_region(df_use, 'bar', "gender", "count_rows", "status_c")
-    
+    # Plot:
+    df_use = group_data(data_afme2, ['gender'])
+    graph_region(df_use, 'bar', "count_rows", "gender",  "status_c")
+
+    # Plot
+    df_use = group_data(data_afme2, ['contributor_status'])
+    graph_region(df_use, 'bar', "count_rows", "contributor_status",  "status_c")
+
 #     # Plot:
 #     df_use = group_data(data_afme2, ['learn_of_sprint'])
 #     graph_region(df_use, 'bar', "learn_of_sprint", "count_rows", "status_c")
@@ -91,7 +95,5 @@ if __name__ == '__main__':
 #     df_use = group_data(data_afme2, ['role'])
 #     graph_region(df_use, 'bar', "role", "count_rows", "status_c")
 
-      # Plot
-#     df_use = group_data(data_afme2, ['contributor_status'])
-#     graph_region(df_use, 'bar', "count_rows", "contributor_status",  "status_c")
+
     
