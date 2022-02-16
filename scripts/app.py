@@ -78,32 +78,6 @@ url = 'https://raw.githubusercontent.com/data-umbrella/data-umbrella-sprints-das
 data_afme2 = pd.read_csv(url, index_col=0)
 
     
-if __name__ == '__main__':  
-
-    # See the first few rows
-    #display(data_afme2.head(1))
-    
-    # Plot:
-    df_use = group_data(data_afme2, ['country'])
-    graph_region(df_use, 'bar', "count_rows", "country",  "status_c")
-    
-    # Plot:
-    df_use = group_data(data_afme2, ['gender'])
-    graph_region(df_use, 'bar', "count_rows", "gender",  "status_c")
-
-    # Plot
-    df_use = group_data(data_afme2, ['contributor_status'])
-    graph_region(df_use, 'bar', "count_rows", "contributor_status",  "status_c")
-
-#     # Plot:
-#     df_use = group_data(data_afme2, ['learn_of_sprint'])
-#     graph_region(df_use, 'bar', "learn_of_sprint", "count_rows", "status_c")
-    
-#     # Plot:
-#     df_use = group_data(data_afme2, ['role'])
-#     graph_region(df_use, 'bar', "role", "count_rows", "status_c")
-
-
 # ----------------------------------------------------------------------------------#
 # App section        
         
@@ -125,8 +99,9 @@ app.layout = html.Div([
             dcc.Dropdown(
                         id='graph-type',
                         options=[{'label': 'Violin plot', 'value': 'violin'},
-                                 {'label': 'Box plot', 'value': 'box'}],
-                                 {'label': 'Bar plot', 'value': 'bar'}],
+                                 {'label': 'Box plot', 'value': 'box'},
+                                 {'label': 'Bar plot', 'value': 'bar'}
+                                ],
                         value= 'bar'),
             dcc.Graph(id='graph-render')
 
@@ -137,10 +112,39 @@ app.layout = html.Div([
     Output('graph-render', 'figure'),
     Input('graph-type', 'value'))
 
-#def update_figure0(selected_graph):
+def update_figure0(selected_graph):
 #    filtered_df = data_pop_del_mort_df
 #    fig0 = graph_region(filtered_df, selected_graph, "Geography", "AverageMortgageAmount")
 #    return fig0
+
+    df_use = group_data(data_afme2, ['country'])
+    graph_region(df_use, 'bar', "count_rows", "country",  "status_c")
+    
+
+    # See the first few rows
+    #display(data_afme2.head(1))
+    
+#     # Plot:
+#     df_use = group_data(data_afme2, ['country'])
+#     graph_region(df_use, 'bar', "count_rows", "country",  "status_c")
+    
+#     # Plot:
+#     df_use = group_data(data_afme2, ['gender'])
+#     graph_region(df_use, 'bar', "count_rows", "gender",  "status_c")
+
+#     # Plot
+#     df_use = group_data(data_afme2, ['contributor_status'])
+#     graph_region(df_use, 'bar', "count_rows", "contributor_status",  "status_c")
+
+#     # Plot:
+#     df_use = group_data(data_afme2, ['learn_of_sprint'])
+#     graph_region(df_use, 'bar', "learn_of_sprint", "count_rows", "status_c")
+    
+#     # Plot:
+#     df_use = group_data(data_afme2, ['role'])
+#     graph_region(df_use, 'bar', "role", "count_rows", "status_c")
+
+
 # ----------------------------------------------------------------------------------#
 
     

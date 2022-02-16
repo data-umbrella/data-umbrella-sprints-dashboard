@@ -44,7 +44,7 @@ if __name__ == '__main__':
     data_pop_del_mort_df = pd.read_csv(url, index_col=0)
     
     # See the first few rows
-    display(data_pop_del_mort_df.head(10))
+    #display(data_pop_del_mort_df.head(10))
     
     # Visualize
     graph_region(data_pop_del_mort_df, 'line', "Time", "AverageMortgageAmount")
