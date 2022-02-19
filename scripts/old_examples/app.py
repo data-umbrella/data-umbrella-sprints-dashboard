@@ -74,8 +74,11 @@ def graph_region(region_df, graph_type: str, dimension1: str, dimension2: str, d
 # ----------------------------------------------------------------------------------#
 
 # Read the data into a dataframe 
-url = 'https://raw.githubusercontent.com/data-umbrella/data-umbrella-sprints-dashboard/main/data/afme2_final.csv'
-data_afme2 = pd.read_csv(url, index_col=0)
+
+data_url = "https://raw.githubusercontent.com/data-umbrella/data-umbrella-sprints-dashboard/main/data/data_derived/afme2_derived.csv"
+df = pd.read_csv(data_url)
+
+data_afme2 = pd.read_csv(data_url, index_col=0)
 
     
 # ----------------------------------------------------------------------------------#
@@ -94,6 +97,15 @@ server = app.server
 # A dropdown menu and a chart
 
 app.layout = html.Div([
+    
+        html.P("Names:"),
+    dcc.Dropdown(
+        id='names', 
+        value='status_c', 
+        options=[{'value': x, 'label': x} 
+                 for x in ['gender', 'contributor_status', 'status_c','continent_o', 'python_experience', 'country']],
+        clearable=False
+    ),
              # This div contains a header H1, a dropdown to select the kind of plot and the plot
             html.H1("Different kinds of plots"),
             dcc.Dropdown(
@@ -103,9 +115,8 @@ app.layout = html.Div([
                                  {'label': 'Bar plot', 'value': 'bar'}
                                 ],
                         value= 'bar'),
-            dcc.Graph(id='graph-render')
+            dcc.Graph(id='graph-render'),
 
-        
 ])
 
 @app.callback(
