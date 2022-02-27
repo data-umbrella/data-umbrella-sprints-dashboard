@@ -4,6 +4,7 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
 import plotly.express as px
+from plotly import graph_objects as go
 import pandas as pd
 
 # https://dash-bootstrap-components.opensource.faculty.ai/docs/components/tabs
@@ -54,37 +55,46 @@ pie_div = dbc.Row([
 ])
 
 bar_div = dbc.Row([
-    html.P("Names:"),
-    dcc.Dropdown(
-        id='names_bar', 
-        value='gender', 
+    dbc.Row([dbc.Col(html.H4("Dimensions:"), width=3),
+             dbc.Col(dcc.Dropdown(
+        id='names_bar',
+        value='gender',
         options=[{'value': x, 'label': x} 
                  for x in ['gender', 'contributor_status', 'continent_o', 'country',  'python_experience', 'primary_spoken_language', 'attendance_status','role']],
         clearable=False
-    ),
-    html.P("Values:"),
-    dcc.Dropdown(
-        id='values_bar', 
-        value='count_rows', 
-        options=[{'value': x, 'label': x} 
+             )),
+        dbc.Col(html.H4("Count:"), width=3),
+        dbc.Col(dcc.Dropdown(
+            id='values_bar',
+            value='count_rows',
+            options=[{'value': x, 'label': x} 
                  for x in ['count_rows']],
-        clearable=False
-    ),
+            clearable=False), width=3
+            )
+    ])
+    ,html.P(html.Br()),
     dcc.Graph(id="bar-chart"),
 ])
 
-# row = html.Div(
-# [
-# dbc.Row(dbc.Col(html.Div("A single column"))),
-# dbc.Row(
-# [
-# dbc.Col(html.Div("One of three columns")),
-# dbc.Col(html.Div("One of three columns")),
-# dbc.Col(html.Div("One of three columns")),
-# ]
-# ),
-# ]
-# )
+funnel_div = dbc.Row([  
+    dcc.Graph(id='FunnelDashboard',
+                    figure = {'data':[
+                            go.Funnel(
+                            name = "xxx",
+                            y = ["Website visit", "Downloads", "Potential customers", "Requested price", "invoice sent"],
+                            x = [39, 27.4, 20.6, 11, 2],
+                            textinfo = "value+percent previous"
+                            )],
+                    
+                            }
+                            )])
+# ])
+# app.layout=html.Div([
+#                     dcc.Graph(
+#                     id='chart1',
+#                     figure=fig
+#                 )
+#         ])
 
 app.layout = html.Div([ 
     dbc.Row([
@@ -98,10 +108,14 @@ app.layout = html.Div([
     dbc.Row([
         dbc.Col(html.H1("Funnel Chart"), width=6),
         dbc.Col(html.H1("Map"), width=6)
-        ])
+        ]),
+    dbc.Row([
+        dbc.Col(funnel_div, width=6),
+        ]),
     ])
 
 
+# PIE CHART
 @app.callback(
     Output("pie-chart", "figure"), 
     [Input("names", "value"), 
@@ -111,6 +125,7 @@ def generate_chart(names, values):
     fig.update_traces(textposition='inside', textinfo='value+percent+label')
     return fig
 
+# BAR CHART
 @app.callback(
     Output("bar-chart", "figure"), 
     [Input("names_bar", "value"), 
@@ -119,9 +134,52 @@ def generate_chart(names, values):
     # Try 4: try to remove warning
     grouped_yr_status = df.groupby([names, 'status_c']).count().reset_index()
     df2 = grouped_yr_status[[names, 'status_c', values]] 
-    fig = px.bar(df2, x=values, y=names, color="status_c", barmode="stack", orientation="h", text=values) 
+    fig = px.bar(df2, x=values, y=names, color="status_c", 
+                barmode="stack", orientation="h", text=values, template=template) 
     
     fig.update_layout(barmode='stack', xaxis={'categoryorder':'total descending'})
     return fig
+
+
+
+# app.layout=html.Div([
+#                     dcc.Graph(
+#                     id='chart1',
+#                     figure=fig
+#                 )
+#         ])
+# FUNNEL CHART
+# @app.callback(
+#     Output("chart1", "figure"), 
+#     [Input("y", "value"), 
+#      Input("x", "value"),
+#      Input("name", "value"),
+#      Input("textinfo", "value")
+#      ])
+# def generate_chart(names, values):
+#     # Try 4: try to remove warning
+#     #grouped_yr_status = df.groupby([names, 'status_c']).count().reset_index()
+#     #df2 = grouped_yr_status[[names, 'status_c', values]] 
+#     #fig = px.bar(df2, x=values, y=names, color="status_c", barmode="stack", orientation="h", text=values) 
+    
+#     #fig.update_layout(barmode='stack', xaxis={'categoryorder':'total descending'})
+
+#     fig = go.Figure(go.Funnel(
+#         y = ["Website visit", "Downloads", "Potential customers", "Requested price", "invoice sent"],
+#         x = [39, 27.4, 20.6, 11, 2]))
+
+#     fig = go.Figure()
+#     fig.add_trace(go.Funnel(
+#         name = 'Women',
+#         y = ["Applied", "RSVPd", "Attended"],
+#         x = [25, 20, 14],
+#         textinfo = "value+percent initial"))
+
+#     fig.add_trace(go.Funnel(
+#         name = 'Men',
+#         y = ["Applied", "RSVPd", "Attended"],
+#         x = [49, 35, 26],
+#         textinfo = "value+percent previous",))
+#     return fig
 
 app.run_server(debug=True)
