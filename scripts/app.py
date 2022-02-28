@@ -1,6 +1,8 @@
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
+#import dash_core_components as dcc
+from dash import dcc
+from dash import html
+#import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
 import plotly.express as px
@@ -76,18 +78,18 @@ bar_div = dbc.Row([
     dcc.Graph(id="bar-chart"),
 ])
 
-funnel_div = dbc.Row([  
-    dcc.Graph(id='FunnelDashboard',
-                    figure = {'data':[
-                            go.Funnel(
-                            name = "xxx",
-                            y = ["Website visit", "Downloads", "Potential customers", "Requested price", "invoice sent"],
-                            x = [39, 27.4, 20.6, 11, 2],
-                            textinfo = "value+percent previous"
-                            )],
+# funnel_div = dbc.Row([  
+#     dcc.Graph(id='FunnelDashboard',
+#                     figure = {'data':[
+#                             go.Funnel(
+#                             name = "xxx",
+#                             y = ["Website visit", "Downloads", "Potential customers", "Requested price", "invoice sent"],
+#                             x = [39, 27.4, 20.6, 11, 2],
+#                             textinfo = "value+percent previous"
+#                             )],
                     
-                            }
-                            )])
+#                             }
+#                             )])
 # ])
 # app.layout=html.Div([
 #                     dcc.Graph(
@@ -95,6 +97,63 @@ funnel_div = dbc.Row([
 #                     figure=fig
 #                 )
 #         ])
+
+fig = go.Figure()
+fig.add_trace(go.Funnel(
+    name = 'Women',
+    y = ["Applied", "RSVPd", "Attended"],
+    x = [25, 20, 14],
+    textinfo = "value+percent initial"))
+
+fig.add_trace(go.Funnel(
+    name = 'Men',
+    y = ["Applied", "RSVPd", "Attended"],
+    x = [49, 35, 26],
+    textinfo = "value+percent previous",))
+
+funnel_div = dbc.Row([
+    dbc.Row([dbc.Col(html.H4("Dimensions:"), width=3),
+             dcc.Graph(figure=fig)
+             ])
+])
+
+variable = "attendance_status"
+
+df['text'] = df['city'] + ', ' 
++ df['state-province'] + ', ' 
++ df['country'] + ', '
++ df['continent_o'] 
+
+fig2 = px.scatter_geo(df, 
+                     #locations="iso_alpha", 
+                     lat = "lat",
+                     lon = "lng",
+                     color=variable,
+                     hover_name="location", 
+                     #hover_name="country", 
+                     hover_data=["country","state-province"],
+                     #text="text",
+                     #size="members_followers",
+                     #mode = "markers",
+                     #marker = dict(
+                     #           size = 8,
+                     #           opacity = 0.8,
+                     #           reversescale = True,
+                     #           autocolorscale = False,
+                     #           symbol = 'square',
+                     #),
+                     projection="natural earth",
+                     title=f"Chart: Geomap of {variable}",
+                    )
+
+fig2.update_geos(
+    visible=True, resolution=50,
+    showcountries=True, countrycolor="LightYellow"
+)
+fig2.update_layout(height=600, margin={"r":10,"t":0,"l":10,"b":0})
+fig2.update_traces(marker_symbol=["circle-x","circle-open-dot","circle-dot"]
+                  , selector=dict(type='scattergeo'))
+
 
 app.layout = html.Div([ 
     dbc.Row([
@@ -110,7 +169,12 @@ app.layout = html.Div([
         dbc.Col(html.H1("Map"), width=6)
         ]),
     dbc.Row([
-        dbc.Col(funnel_div, width=6),
+        dcc.Graph(figure=fig),
+        #dcc.Col(funnel_div, width=6)
+        ]),
+    dbc.Row([
+        dcc.Graph(figure=fig2),
+        #dcc.Col(funnel_div, width=6)
         ]),
     ])
 
@@ -140,7 +204,7 @@ def generate_chart(names, values):
     fig.update_layout(barmode='stack', xaxis={'categoryorder':'total descending'})
     return fig
 
-
+app.run_server(debug=True)
 
 # app.layout=html.Div([
 #                     dcc.Graph(
@@ -182,4 +246,3 @@ def generate_chart(names, values):
 #         textinfo = "value+percent previous",))
 #     return fig
 
-app.run_server(debug=True)
