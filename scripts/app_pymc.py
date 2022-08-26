@@ -28,7 +28,9 @@ import pandas as pd
 template = "seaborn"
 external_stylesheets = [dbc.themes.BOOTSTRAP, dbc.themes.SOLAR]
 
-data_url = "https://raw.githubusercontent.com/data-umbrella/data-umbrella-sprints-dashboard/main/data/data_derived/afme2_derived.csv"
+#data_url = "https://raw.githubusercontent.com/data-umbrella/data-umbrella-sprints-dashboard/main/data/data_derived/afme2_derived.csv"
+
+data_url = "https://raw.githubusercontent.com/data-umbrella/data-umbrella-sprints-dashboard/main/data/data_derived/pymc_2022_derived.csv"
 df = pd.read_csv(data_url)
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -40,7 +42,7 @@ pie_div = dbc.Row([
         id='names', 
         value='status_c', 
         options=[{'value': x, 'label': x} 
-                 for x in ['gender', 'contributor_status', 'status_c','continent_o', 'python_experience', 'country']],
+                 for x in ['gender',  'status_c','continent_o', 'python_experience', 'country']],
         clearable=False
     )),
          dbc.Col(html.H4("Count:"), width=3),
@@ -62,7 +64,7 @@ bar_div = dbc.Row([
         id='names_bar',
         value='gender',
         options=[{'value': x, 'label': x} 
-                 for x in ['gender', 'contributor_status', 'continent_o', 'country',  'python_experience', 'primary_spoken_language', 'attendance_status','role']],
+                 for x in ['gender', 'continent_o', 'country',  'python_experience', 'primary_spoken_language', 'attendance_status','role']],
         clearable=False
              )),
         dbc.Col(html.H4("Count:"), width=3),
@@ -144,7 +146,7 @@ card = dbc.Card(
     dbc.CardHeader(
         dbc.Tabs(
                 [
-                    dbc.Tab(label="AFME2 (Oct 2021)", tab_id="AFME2", tab_style={"marginLeft": "left"}),
+                    dbc.Tab(label="PyMC (Jul-Aug 2022)", tab_id="PyMC", tab_style={"marginLeft": "left"}),
                     dbc.Tab(label="Tab 2", tab_id="tab-2", label_style={"color": "#00AEF9"}),
                 ],
                 id="card-tabs",
